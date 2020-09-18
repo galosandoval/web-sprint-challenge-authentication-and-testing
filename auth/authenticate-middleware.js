@@ -50,7 +50,7 @@ async function add(user) {
 }
 
 function findBy(filter) {
-  db("users").where(filter).select('users.username','users.password', 'users.id');
+  return db("users").where(filter);
 }
 
 function findById(id) {

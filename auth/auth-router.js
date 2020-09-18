@@ -1,8 +1,7 @@
-const router = require('express').Router();
-const Users = require('./authenticate-middleware')
-const bcryptjs = require('bcryptjs')
+const router = require("express").Router();
+const Users = require("./authenticate-middleware");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken"); // install library
-
 
 router.post("/register", (req, res) => {
   const credentials = req.body;
@@ -37,8 +36,10 @@ router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (Users.isValid(req.body)) {
-    Users.findBy({ username: username })
+    console.log({ username, password })
+    Users.findBy({ username })
       .then(([user]) => {
+        console.log([user]);
         // compare the password the hash stored in the database
         if (user && bcryptjs.compareSync(password, user.password)) {
           const token = makeJwt(user);
@@ -63,7 +64,6 @@ function makeJwt(user) {
   const payload = {
     subject: user.id,
     username: user.username,
-    role: user.role,
   };
 
   const secret = process.env.JWT_SECRET || "is it secret, is it safe?";
