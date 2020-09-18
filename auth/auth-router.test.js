@@ -29,15 +29,15 @@ describe("auth router", () => {
 
       const hobbits = await db("users");
 
-      expect(hobbits).toHaveLength(3);
+      expect(hobbits).toHaveLength(0);
     });
   });
 
   describe("login", () => {
-    beforeEach(async () => {
-      // trucate or empty the hobbits table
-      await db("users").truncate();
-    });
+    // beforeEach(async () => {
+    //   // trucate or empty the hobbits table
+    //   await db("users").truncate();
+    // });
     it("should register a new user and return 201", () => {
       return supertest(server)
         .post("/api/auth/register")
